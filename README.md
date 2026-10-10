@@ -1,6 +1,6 @@
 # Jest API Testing — Learning Project
 
-A hands-on project for learning API integration testing with **Jest** and **Supertest**. Tests are written against a locally running Express + SQLite REST API that covers auth, products, cart, and orders.
+A hands-on project for learning API integration testing with **Jest** and **Supertest**. Tests are written against a locally running [Sample store API](https://github.com/ikhszy/sample-store-API).
 
 The goal is to build practical testing skills with a view towards working in professional environments — covering real patterns like API model separation, test data management, and clean test structure.
 
