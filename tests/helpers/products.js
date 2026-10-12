@@ -63,4 +63,69 @@ export async function createProductData(token) {
         productRating: response.body.rating,
         productdescription: response.body.description
     };
+};
+
+export async function createProductInsufficientStock(token) {
+    const productName = faker.book.title();
+    const productCategory = "Books";
+    const productPrice = faker.number.float({ min: 10, max: 200, fractionDigits: 2});
+    const productStock = 5;
+    const productRating = faker.number.float({min: 1, max: 5, fractionDigits: 1});
+    const productDescription = 'this is a test item to be deleted';
+
+    const response = await request.post('/products')
+    .set({
+        "content-type": "application/json",
+        authorization: `Bearer ${token}`
+    })
+    .send({
+        name: productName,
+        category: productCategory,
+        price: productPrice,
+        stock: productStock,
+        rating: productRating,
+        description: productDescription
+    });
+
+    if(response.status !== 201) {
+        throw new Error(
+            `GET products failed(${response.status}): ${JSON.stringify(response.body)}`
+        );
+    };
+
+    return {
+        productId: response.body.id,
+        productName: response.body.name,
+        productCategory: response.body.category,
+        productPrice: response.body.price,
+        productStock: response.body.stock,
+        productRating: response.body.rating,
+        productdescription: response.body.description
+    };
+};
+
+export async function getProductById(productId) {
+    const response = await request.get(`/products/${productId}`);
+
+    return response;
+};
+
+export async function patchProductById(token, productId, body) {
+    return await request.patch(`/products/${productId}`)
+    .set({
+        "content-type": "application/json",
+        authorization: `Bearer ${token}`
+    })
+    .send(body);
+};
+
+export async function replenishStock(token, productId) {
+    return await request.patch(`/products/${productId}`)
+    .set({
+        "content-type": "application/json",
+        authorization: `Bearer ${token}`
+    })
+    .send({
+        stock: 100
+    });
 }
