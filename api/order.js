@@ -68,7 +68,7 @@ export async function deleteOrderById(token, id) {
 };
 
 export async function clearAllOrders() {
-    const adminToken = (await getToken('admin', 'Admin1234!')).access_token;
+    const adminToken = (await getToken(process.env.ADMIN_USERNAME, process.env.ADMIN_PASSWORD)).access_token;
 
     const response = await getOrder(adminToken);
     const orders = response.body.data;

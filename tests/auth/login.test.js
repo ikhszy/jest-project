@@ -11,21 +11,21 @@ const request = supertest(process.env.BASE_URL);
 describe('POST /auth/login', () => {
 
     // test data
-    const adminUsername = 'admin';
-    const adminPassword = 'Admin1234!';
+    const adminUsername = process.env.ADMIN_USERNAME;
+    const adminPassword = process.env.ADMIN_PASSWORD;
     const adminRequest = {
             username: adminUsername,
             password: adminPassword
         }
 
-    const customerUsername = 'alice';
-    const customerPassword = 'Password1!';
+    const customerUsername = process.env.CUSTOMER_1_USERNAME;
+    const customerPassword = process.env.CUSTOMER_1_PASSWORD;
     const custRequest = {
         username: customerUsername,
             password: customerPassword
     }
 
-    it.only('should successfully login as Administrator', async() => {
+    it('should successfully login as Administrator', async() => {
         const response = await postLogin(adminRequest);
 
         console.log(response.body);

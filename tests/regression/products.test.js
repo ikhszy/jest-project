@@ -129,7 +129,7 @@ describe('GET /products', () => {
 
     it('should return empty data array on out-of-range page', async() => {
         const response = await getProducts({
-            limit: 30,
+            limit: 100,
             page: 5
         })
 
@@ -159,7 +159,7 @@ describe('GET /products', () => {
 
 describe('POST /products', () => {
     it('should successfully create new product as admin', async() => {
-        const { access_token: token } = await getToken('admin', 'Admin1234!');
+        const { access_token: token } = await getToken(process.env.ADMIN_USERNAME, process.env.ADMIN_PASSWORD);
         const prodname = `item ${Date.now()}`
         const response = await createProduct(token, {
             name: prodname,
@@ -175,7 +175,7 @@ describe('POST /products', () => {
     });
 
     it('should failed on missing name', async() => {
-        const { access_token: token } = await getToken('admin', 'Admin1234!');
+        const { access_token: token } = await getToken(process.env.ADMIN_USERNAME, process.env.ADMIN_PASSWORD);
         const prodname = `item ${Date.now()}`
         const response = await createProduct(token, {
             name: '',
@@ -191,7 +191,7 @@ describe('POST /products', () => {
     });
 
     it('should failed on missing category', async() => {
-        const { access_token: token } = await getToken('admin', 'Admin1234!');
+        const { access_token: token } = await getToken(process.env.ADMIN_USERNAME, process.env.ADMIN_PASSWORD);
         const prodname = `item ${Date.now()}`
         const response = await createProduct(token, {
             name: prodname,
@@ -207,7 +207,7 @@ describe('POST /products', () => {
     });
 
     it.skip('should failed on missing price', async() => {
-        const { access_token: token } = await getToken('admin', 'Admin1234!');
+        const { access_token: token } = await getToken(process.env.ADMIN_USERNAME, process.env.ADMIN_PASSWORD);
         const prodname = `item ${Date.now()}`
         const response = await createProduct(token, {
             name: prodname,
@@ -223,7 +223,7 @@ describe('POST /products', () => {
     });
 
     it('should failed on invalid token', async() => {
-        const { access_token: token } = await getToken('alice', 'Password1!');
+        const { access_token: token } = await getToken(process.env.CUSTOMER_1_USERNAME, process.env.CUSTOMER_1_PASSWORD);
         const prodname = `item ${Date.now()}`
         const response = await createProduct(token, {
             name: prodname,
@@ -239,7 +239,7 @@ describe('POST /products', () => {
     });
 
     it('should failed on no token', async() => {
-        const { access_token: token } = await getToken('alice', 'Password1!');
+        const { access_token: token } = await getToken(process.env.ADMIN_USERNAME, process.env.ADMIN_PASSWORD);
         const prodname = `item ${Date.now()}`
         const response = await createProduct('', {
             name: prodname,
@@ -263,8 +263,8 @@ describe('PATCH /products', () => {
     let custToken = '';
 
     beforeAll(async() => {
-        token = (await getToken('admin', 'Admin1234!')).access_token;
-        custToken = (await getToken('alice', 'Password1!')).access_token;
+        token = await(await getToken(process.env.ADMIN_USERNAME, process.env.ADMIN_PASSWORD)).access_token;
+        custToken = await(await getToken(process.env.CUSTOMER_1_USERNAME, process.env.CUSTOMER_1_PASSWORD)).access_token;
 
         const prod = await createProductData(token);
         prodId = prod.productId;
@@ -329,8 +329,8 @@ describe('PUT /products', () => {
     let custToken = '';
 
     beforeAll(async() => {
-        token = (await getToken('admin', 'Admin1234!')).access_token;
-        custToken = (await getToken('alice', 'Password1!')).access_token;
+        token = await(await getToken(process.env.ADMIN_USERNAME, process.env.ADMIN_PASSWORD)).access_token;
+        custToken = await(await getToken(process.env.CUSTOMER_1_USERNAME, process.env.CUSTOMER_1_PASSWORD)).access_token;
 
         const prod = await createProductData(token);
         prodId = prod.productId;
@@ -397,8 +397,8 @@ describe('DELETE /products', () => {
     let custToken = '';
 
     beforeAll(async() => {
-        token = (await getToken('admin', 'Admin1234!')).access_token;
-        custToken = (await getToken('alice', 'Password1!')).access_token;
+        token = await(await getToken(process.env.ADMIN_USERNAME, process.env.ADMIN_PASSWORD)).access_token;
+        custToken = await(await getToken(process.env.CUSTOMER_1_USERNAME, process.env.CUSTOMER_1_PASSWORD)).access_token;
         
         const prod = await createProductData(token);
         prodId = prod.productId;

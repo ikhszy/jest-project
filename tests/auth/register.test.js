@@ -11,12 +11,13 @@ const request = supertest(process.env.BASE_URL);
 describe('POST /auth/register', () => {
     const dupeUsername = `testuser_${Date.now()}`;
     const dupeEmail = dupeUsername + '@mail.com';
+    const passRegister = process.env.CUSTOMER_1_PASSWORD;
     
     it('should register new user', async () => {
         const response = await postRegister({
             username: dupeUsername,
             email: dupeEmail,
-            password: 'password1',
+            password: passRegister,
             first_name: 'test',
             last_name: 'user'
         })
@@ -30,7 +31,7 @@ describe('POST /auth/register', () => {
         const response = await postRegister({
             username: dupeUsername,
             email: `testuser_${Date.now()}@mail.com`,
-            password: 'password1',
+            password: passRegister,
             first_name: 'duplicate',
             last_name: 'username'
         })
@@ -43,7 +44,7 @@ describe('POST /auth/register', () => {
         const response = await postRegister({
             username: `testuser_${Date.now()}`,
             email: dupeEmail,
-            password: 'password1',
+            password: passRegister,
             first_name: 'duplicate',
             last_name: 'username'
         })
@@ -56,7 +57,7 @@ describe('POST /auth/register', () => {
         const response = await postRegister({
             username: '',
             email: dupeEmail,
-            password: 'password1',
+            password: passRegister,
             first_name: 'duplicate',
             last_name: 'username'
         })
@@ -69,7 +70,7 @@ describe('POST /auth/register', () => {
         const response = await postRegister({
             username: dupeUsername,
             email: '',
-            password: 'password1',
+            password: passRegister,
             first_name: 'test',
             last_name: 'user'
         })
@@ -82,7 +83,7 @@ describe('POST /auth/register', () => {
         const response = await postRegister({
             username: dupeUsername,
             email: dupeEmail,
-            password: 'password1',
+            password: passRegister,
             first_name: '',
             last_name: 'user'
         })
@@ -95,7 +96,7 @@ describe('POST /auth/register', () => {
         const response = await postRegister({
             username: dupeUsername,
             email: dupeEmail,
-            password: 'password1',
+            password: passRegister,
             first_name: 'test',
             last_name: ''
         })

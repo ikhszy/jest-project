@@ -10,7 +10,7 @@ const request = supertest(process.env.BASE_URL);
 
 describe('POST /products', () => {
     it('should successfully create new product as admin', async() => {
-        const { access_token: token } = await getToken('admin', 'Admin1234!');
+        const { access_token: token } = await getToken(process.env.ADMIN_USERNAME, process.env.ADMIN_PASSWORD);
         const prodname = `item ${Date.now()}`
         const response = await createProduct(token, {
             name: prodname,
@@ -26,7 +26,7 @@ describe('POST /products', () => {
     });
 
     it('should failed on missing name', async() => {
-        const { access_token: token } = await getToken('admin', 'Admin1234!');
+        const { access_token: token } = await getToken(process.env.ADMIN_USERNAME, process.env.ADMIN_PASSWORD);
         const prodname = `item ${Date.now()}`
         const response = await createProduct(token, {
             name: '',
@@ -42,7 +42,7 @@ describe('POST /products', () => {
     });
 
     it('should failed on missing category', async() => {
-        const { access_token: token } = await getToken('admin', 'Admin1234!');
+        const { access_token: token } = await getToken(process.env.ADMIN_USERNAME, process.env.ADMIN_PASSWORD);
         const prodname = `item ${Date.now()}`
         const response = await createProduct(token, {
             name: prodname,
@@ -58,7 +58,7 @@ describe('POST /products', () => {
     });
 
     it.skip('should failed on missing price', async() => {
-        const { access_token: token } = await getToken('admin', 'Admin1234!');
+        const { access_token: token } = await getToken(process.env.ADMIN_USERNAME, process.env.ADMIN_PASSWORD);
         const prodname = `item ${Date.now()}`
         const response = await createProduct(token, {
             name: prodname,
@@ -74,7 +74,7 @@ describe('POST /products', () => {
     });
 
     it('should failed on invalid token', async() => {
-        const { access_token: token } = await getToken('alice', 'Password1!');
+        const { access_token: token } = await getToken(process.env.CUSTOMER_1_USERNAME, process.env.CUSTOMER_1_PASSWORD);
         const prodname = `item ${Date.now()}`
         const response = await createProduct(token, {
             name: prodname,
@@ -90,7 +90,7 @@ describe('POST /products', () => {
     });
 
     it('should failed on no token', async() => {
-        const { access_token: token } = await getToken('alice', 'Password1!');
+        const { access_token: token } = await getToken(process.env.ADMIN_USERNAME, process.env.ADMIN_PASSWORD);
         const prodname = `item ${Date.now()}`
         const response = await createProduct('', {
             name: prodname,

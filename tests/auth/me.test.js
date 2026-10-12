@@ -9,8 +9,8 @@ dotenv.config();
 const request = supertest(process.env.BASE_URL);
 
 describe('GET /auth/me', () => {
-    const customerUsername = 'bob';
-    const customerPassword = 'Password1!';
+    const customerUsername =process.env.CUSTOMER_2_USERNAME;
+    const customerPassword = process.env.CUSTOMER_2_PASSWORD;
     let access_token = '';
     beforeAll(async () => {
         ({ access_token } = await getToken(customerUsername, customerPassword));

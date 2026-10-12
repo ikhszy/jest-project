@@ -9,8 +9,8 @@ dotenv.config();
 const request = supertest(process.env.BASE_URL);
 
 describe('POST /auth/logout', () => {
-    const customerUsername = 'alice';
-    const customerPassword = 'Password1!';
+    const customerUsername = process.env.CUSTOMER_1_USERNAME;
+    const customerPassword = process.env.CUSTOMER_1_PASSWORD;
     let access_token_res = '';
     let refresh_token_res = '';
     
