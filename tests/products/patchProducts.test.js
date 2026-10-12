@@ -17,8 +17,8 @@ describe('PATCH /products', () => {
     let custToken = '';
 
     beforeAll(async() => {
-        token = (await getToken('admin', 'Admin1234!')).access_token;
-        custToken = (await getToken('alice', 'Password1!')).access_token;
+        token = await(await getToken(process.env.ADMIN_USERNAME, process.env.ADMIN_PASSWORD)).access_token;
+        custToken = await(await getToken(process.env.CUSTOMER_1_USERNAME, process.env.CUSTOMER_1_PASSWORD)).access_token;
 
         const prod = await createProductData(token);
         prodId = prod.productId;

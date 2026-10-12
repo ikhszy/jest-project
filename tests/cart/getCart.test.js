@@ -14,7 +14,7 @@ describe('GET cart', () => {
     let custToken = '';
 
     beforeAll(async() => {
-        custToken = (await getToken('alice', 'Password1!')).access_token;
+        custToken = await(await getToken(process.env.CUSTOMER_1_USERNAME, process.env.CUSTOMER_1_PASSWORD)).access_token;
     })
     
     it('Successfully shows cart', async() => {

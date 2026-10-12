@@ -10,13 +10,14 @@ const request = supertest(process.env.BASE_URL);
 describe('POST /auth/register', () => {
     const dupeUsername = `testuser_${Date.now()}`;
     const dupeEmail = dupeUsername + '@mail.com';
+    const passRegister = process.env.CUSTOMER_1_PASSWORD;
     
     it('should register new user', async () => {
         const response = await request.post('/auth/register')
         .send({
             username: dupeUsername,
             email: dupeEmail,
-            password: 'password1',
+            password: passRegister,
             first_name: 'test',
             last_name: 'user'
         });
@@ -31,7 +32,7 @@ describe('POST /auth/register', () => {
         .send({
             username: dupeUsername,
             email: `testuser_${Date.now()}@mail.com`,
-            password: 'password1',
+            password: passRegister,
             first_name: 'duplicate',
             last_name: 'username'
         });
@@ -45,7 +46,7 @@ describe('POST /auth/register', () => {
         .send({
             username: `testuser_${Date.now()}`,
             email: dupeEmail,
-            password: 'password1',
+            password: passRegister,
             first_name: 'duplicate',
             last_name: 'username'
         });
@@ -59,7 +60,7 @@ describe('POST /auth/register', () => {
         .send({
             username: '',
             email: dupeEmail,
-            password: 'password1',
+            password: passRegister,
             first_name: 'duplicate',
             last_name: 'username'
         });
@@ -73,7 +74,7 @@ describe('POST /auth/register', () => {
         .send({
             username: dupeUsername,
             email: '',
-            password: 'password1',
+            password: passRegister,
             first_name: 'test',
             last_name: 'user'
         });
@@ -87,7 +88,7 @@ describe('POST /auth/register', () => {
         .send({
             username: dupeUsername,
             email: dupeEmail,
-            password: 'password1',
+            password: passRegister,
             first_name: '',
             last_name: 'user'
         });
@@ -101,7 +102,7 @@ describe('POST /auth/register', () => {
         .send({
             username: dupeUsername,
             email: dupeEmail,
-            password: 'password1',
+            password: passRegister,
             first_name: 'test',
             last_name: ''
         });
@@ -114,18 +115,23 @@ describe('POST /auth/register', () => {
 describe('POST /auth/login', () => {
 
     // test data
-    const adminUsername = 'admin';
-    const adminPassword = 'Admin1234!';
+    const adminUsername = process.env.ADMIN_USERNAME;
+    const adminPassword = process.env.ADMIN_PASSWORD;
+    const adminRequest = {
+            username: adminUsername,
+            password: adminPassword
+        }
 
-    const customerUsername = 'alice';
-    const customerPassword = 'Password1!';
+    const customerUsername = process.env.CUSTOMER_1_USERNAME;
+    const customerPassword = process.env.CUSTOMER_1_PASSWORD;
+    const custRequest = {
+        username: customerUsername,
+            password: customerPassword
+    }
 
     it('should successfully login as Administrator', async() => {
         const response = await request.post('/auth/login')
-        .send({
-            username: adminUsername,
-            password: adminPassword
-        });
+        .send(adminRequest);
 
         console.log(response.body);
         
@@ -137,10 +143,7 @@ describe('POST /auth/login', () => {
 
     it('should successfully login as customer', async () => {
         const response = await request.post('/auth/login')
-        .send({
-            username: customerUsername,
-            password: customerPassword
-        });
+        .send(custRequest);
         
         expect(response.body).toHaveProperty('access_token');
         expect(response.body).toHaveProperty('refresh_token');
@@ -198,8 +201,8 @@ describe('POST /auth/login', () => {
 })
 
 describe('GET /auth/me', () => {
-    const customerUsername = 'bob';
-    const customerPassword = 'Password1!';
+    const customerUsername =process.env.CUSTOMER_2_USERNAME;
+    const customerPassword = process.env.CUSTOMER_2_PASSWORD;
     let access_token = '';
     beforeAll(async () => {
         ({ access_token } = await getToken(customerUsername, customerPassword));
@@ -242,8 +245,8 @@ describe('GET /auth/me', () => {
 
 describe('POST /auth/refresh', () => {
 
-    const customerUsername = 'alice';
-    const customerPassword = 'Password1!';
+    const customerUsername = process.env.CUSTOMER_1_USERNAME;
+    const customerPassword = process.env.CUSTOMER_1_PASSWORD;
     let fresh_token = '';
     beforeAll(async () => {
         fresh_token = (await getToken(customerUsername, customerPassword)).refresh_token;
@@ -283,8 +286,8 @@ describe('POST /auth/refresh', () => {
 });
 
 describe('POST /auth/logout', () => {
-    const customerUsername = 'alice';
-    const customerPassword = 'Password1!';
+    const customerUsername = process.env.CUSTOMER_1_USERNAME;
+    const customerPassword = process.env.CUSTOMER_1_PASSWORD;
     let access_token_res = '';
     let refresh_token_res = '';
     

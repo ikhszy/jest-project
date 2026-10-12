@@ -14,7 +14,7 @@ describe('POST cart', () => {
     let prodId, qty;
 
     beforeAll(async() => {
-        custToken = await(await getToken('alice', 'Password1!')).access_token;
+        custToken = await(await getToken(process.env.CUSTOMER_1_USERNAME, process.env.CUSTOMER_1_PASSWORD)).access_token;
         prodId = (await (getProductData(1))).productId;
         qty = Math.floor(Math.random() * 10) + 1;
 

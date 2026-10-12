@@ -16,7 +16,7 @@ describe('DELETE /cart/items/:productId', () => {
     let cartItems = [];
 
     beforeAll(async() => {
-        custToken = await(await getToken('alice', 'Password1!')).access_token;
+        custToken = await(await getToken(process.env.CUSTOMER_1_USERNAME, process.env.CUSTOMER_1_PASSWORD)).access_token;
 
         // clear cart first
         await deleteCart(custToken);

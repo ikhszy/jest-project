@@ -20,9 +20,9 @@ describe('DELETE /orders', () => {
         await clearAllOrders();
 
         // get token for all users
-        custToken_1 = await(await getToken('alice', 'Password1!')).access_token;
-        custToken_2 = await(await getToken('bob', 'Password1!')).access_token;
-        adminToken = await(await getToken('admin', 'Admin1234!')).access_token;
+        custToken_1 = await(await getToken(process.env.CUSTOMER_1_USERNAME, process.env.CUSTOMER_1_PASSWORD)).access_token;
+        custToken_2 = await(await getToken(process.env.CUSTOMER_2_USERNAME, process.env.CUSTOMER_2_PASSWORD)).access_token;
+        adminToken = await(await getToken(process.env.ADMIN_USERNAME, process.env.ADMIN_PASSWORD)).access_token;
 
         // clear customer carts
         await clearCartData(custToken_1);
