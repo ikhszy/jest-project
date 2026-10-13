@@ -67,8 +67,9 @@ jest-project/
 |----------|---------------|
 | Auth     | ✅ Complete   |
 | Products | ✅ Complete   |
-| Cart     | 🔄 In progress |
-| Orders   | 🔄 In progress |
+| Cart     | ✅ Complete   |
+| Orders   | ✅ Complete   |
+| Users    | ✅ Complete   |
 
 ---
 
