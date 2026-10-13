@@ -22,3 +22,11 @@ export async function getToken(uname, upass) {
         refresh_token: response.body.refresh_token
     };
 }
+
+export async function normalLogin(uname, upass) {
+    return await request.post('/auth/login')
+        .send({ 
+            username: uname,
+            password: upass
+        });
+}
